@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:covidtracker/resusable_card.dart';
-import 'home_page.dart';
 import 'networking.dart';
 
 class ListViewPage extends StatefulWidget {
@@ -15,7 +14,7 @@ class _ListViewPageState extends State<ListViewPage> {
     dataGet();
   }
 
-  dynamic dataGet() async {
+  Future<dynamic> dataGet() async {
     CaseInfoFetch caseInfoFetch = CaseInfoFetch();
     var dataOut1 = await caseInfoFetch.getStatewise();
     return dataOut1;
@@ -31,3 +30,12 @@ class _ListViewPageState extends State<ListViewPage> {
     );
   }
 }
+
+//
+//ReusableCard(
+//colour: Colors.cyan,
+//onPress: () async {
+//var data = await dataGet();
+//print(data[0]);
+//},
+//),

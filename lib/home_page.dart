@@ -19,14 +19,19 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    var data = dataGet();
+    dataGet();
+    getData();
+  }
+
+  Future<dynamic> getData() async {
+    var data = await dataGet();
     confCases = data[0]["confirmed"];
     activeCases = data[0]["active"];
     recoveredCases = data[0]["recovered"];
     deceasedCases = data[0]["deaths"];
   }
 
-  dynamic dataGet() async {
+  Future<dynamic> dataGet() async {
     CaseInfoFetch caseInfoFetch = CaseInfoFetch();
     var dataOut = await caseInfoFetch.getStatewise();
     return dataOut;
@@ -65,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                       colour: Color(0xFFFFC2B3),
                       cardChild: Center(
                         child: Text(
-                          'Active Cases: $confCases',
+                          'Active Cases: $activeCases',
                           style: kHomeCard2,
                           textAlign: TextAlign.center,
                         ),
@@ -77,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                       colour: Color(0xFFC2F0C2),
                       cardChild: Center(
                         child: Text(
-                          'Recovered Cases: $confCases',
+                          'Recovered Cases: $recoveredCases',
                           style: kHomeCard3,
                           textAlign: TextAlign.center,
                         ),
@@ -89,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                       colour: Color(0xFFD1D1E0),
                       cardChild: Center(
                         child: Text(
-                          'Deceased Cases: $confCases',
+                          'Deceased Cases: $deceasedCases',
                           style: kHomeCard4,
                           textAlign: TextAlign.center,
                         ),
