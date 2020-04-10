@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:covidtracker/resusable_card.dart';
+import 'home_page.dart';
+import 'networking.dart';
 
 class ListViewPage extends StatefulWidget {
   @override
@@ -7,24 +10,24 @@ class ListViewPage extends StatefulWidget {
 
 class _ListViewPageState extends State<ListViewPage> {
   @override
+  void initState() {
+    super.initState();
+    dataGet();
+  }
+
+  dynamic dataGet() async {
+    CaseInfoFetch caseInfoFetch = CaseInfoFetch();
+    var dataOut1 = await caseInfoFetch.getStatewise();
+    return dataOut1;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('State-Wise Distribution'),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, position) {
-          return Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                position.toString(),
-                style: TextStyle(fontSize: 22.0),
-              ),
-            ),
-          );
-        },
-      ),
+      body: Container(),
     );
   }
 }

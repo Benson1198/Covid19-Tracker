@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'list_view.dart';
 import 'resusable_card.dart';
 import 'constants.dart';
+import 'networking.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,10 +11,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int confCases;
-  int activeCases;
-  int recoveredCases;
-  int deceasedCases;
+  var confCases;
+  var activeCases;
+  var recoveredCases;
+  var deceasedCases;
+
+  @override
+  void initState() {
+    super.initState();
+    var data = dataGet();
+    confCases = data[0]["confirmed"];
+    activeCases = data[0]["active"];
+    recoveredCases = data[0]["recovered"];
+    deceasedCases = data[0]["deaths"];
+  }
+
+  dynamic dataGet() async {
+    CaseInfoFetch caseInfoFetch = CaseInfoFetch();
+    var dataOut = await caseInfoFetch.getStatewise();
+    return dataOut;
+  }
 
   @override
   Widget build(BuildContext context) {
