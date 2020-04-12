@@ -1,9 +1,11 @@
+import 'package:covidtracker/helpline_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'list_view.dart';
 import 'resusable_card.dart';
 import 'constants.dart';
-import 'networking.dart';
+import 'info_list_fetch.dart';
+import 'loading_screen.dart';
+import 'helpline_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,22 +21,17 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    dataGet();
     getData();
   }
 
-  Future<dynamic> getData() async {
-    var data = await dataGet();
-    confCases = data[0]["confirmed"];
-    activeCases = data[0]["active"];
-    recoveredCases = data[0]["recovered"];
-    deceasedCases = data[0]["deaths"];
-  }
-
-  Future<dynamic> dataGet() async {
-    CaseInfoFetch caseInfoFetch = CaseInfoFetch();
-    var dataOut = await caseInfoFetch.getStatewise();
-    return dataOut;
+  void getData() async {
+    var data = await CaseInfoFetch().getStatewise();
+    setState(() {
+      confCases = data[0]["confirmed"];
+      activeCases = data[0]["active"];
+      recoveredCases = data[0]["recovered"];
+      deceasedCases = data[0]["deaths"];
+    });
   }
 
   @override
@@ -111,17 +108,23 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Expanded(
                   child: ReusableCard(
+                    onPress: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return HelplinePage();
+                      }));
+                    },
                     colour: Colors.white,
                     cardChild: Column(
                       children: <Widget>[
                         SizedBox(height: 12.0),
                         Icon(
-                          Icons.refresh,
+                          Icons.phone,
                           color: Colors.black,
                           size: 55.0,
                         ),
                         Text(
-                          'Refresh',
+                          'Helpline',
                           style: TextStyle(
                               fontSize: 17.0,
                               color: Colors.black,
@@ -137,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                     onPress: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return ListViewPage();
+                        return LoadingScreen();
                       }));
                     },
                     colour: Colors.red,

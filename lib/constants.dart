@@ -14,3 +14,10 @@ const kHomeCard4 = TextStyle(
 
 const kBelowButton =
     TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900, color: Colors.white);
+
+const kListText = TextStyle(fontSize: 20.0, color: Colors.white);
+
+const kListTitle =
+    TextStyle(fontSize: 20.0, color: Colors.black, fontWeight: FontWeight.bold);
+
+const kHelplineText = TextStyle(fontSize: 20.0, color: Colors.white);
